@@ -38,7 +38,8 @@ $(document).ready(function () {
     $("#movie_grid").append(gridItem);
     $("#movie_grid").append(gridItem);
     $("#movie_grid").append(gridItem);
-   
+    $("#movie_grid").append(gridItem);
+
 });
 
 
