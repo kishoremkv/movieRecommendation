@@ -1,0 +1,100 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: #232526;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+
+
+.login-cover {
+    background: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 800;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 
+.page-content {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mdl-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+
+#login_progress {
+    display: none;
+}
+
+#login_error {
+    display: none;
+}
+
+@media (max-width: 800px) {
+
+   
+}
+
+.mdl-cell {
+    margin:20px;
+}
+
+.card-rectangle.mdl-card {
+    width: 110px;
+    height: 165px;
+    min-height: 165px;
+    border: 2px transparent;
+}
+.card-rectangle.mdl-card:hover {
+    background: #FF5722;
+    border: 2px solid #FF5722;
+}
+
+.movie-title {
+    margin-top: 4px;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    min-width: 0;
+    max-width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap!important;
+    height: 20px;
+    display: block;
+    color: hsla(0,0%,100%,.80);
+    line-height: 20px;
+    font-size: 13px;
+}
+
+.movie-title:hover {
+    margin-top: 4px;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    min-width: 0;
+    max-width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap!important;
+    height: 20px;
+    display: block;
+    color: hsla(0,0%,100%,.80);
+    line-height: 20px;
+    font-size: 13px;
+    text-decoration:underline;
+}
+
+.movie-year {
+    color: hsla(0,0%,100%,.45);
+}
