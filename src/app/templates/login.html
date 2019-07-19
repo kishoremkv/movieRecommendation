@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Movie Recomendation</title>
+    <link rel="icon" type="image/gif" href="" />
+
+    <!--JQUERY JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <!--MATERIAL DESIGN AND FONT-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_orange-amber.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!--DIALOG POLYFILL-->
+    <link rel="stylesheet" type="text/css" href="./static/css/dialog-polyfill.css" />
+    <script src="./static/js/dialog-polyfill.js"></script>
+
+
+    <!--MY JS AND CSS FILES-->
+    <link rel="stylesheet" href="./static/css/styles.css">
+    <script src="./static/js/index.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <dialog id="login_dialog" class="mdl-dialog">
+        <form action="" method="post">
+            <h4 class="mdl-dialog__title">Sign In</h4>
+            <div class="mdl-dialog__content">
+                {% if error %}
+                <p id="login_error">{{error}}</p>
+                {% endif %}
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                    value="{{ request.form.username }}">
+                    <input class="mdl-textfield__input" type="text" id="login_email" value="{{ request.form.login_email }}" name="login_email">
+                    <label class="mdl-textfield__label" for="login_email">Email</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="password" id="login_password" name="login_password"
+                        value="{{ request.form.login_password }}">
+                    <label class="mdl-textfield__label" for="login_password">Password</label>
+                </div>
+
+            </div>
+            <div class="mdl-dialog__actions">
+                <button id="login_button"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    type="submit">Sign In</button>
+                <div id="login_progress" class="mdl-spinner mdl-js-spinner is-active"></div>
+            </div>
+        </form>
+    </dialog>
+
+    <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+</body>
+</html>

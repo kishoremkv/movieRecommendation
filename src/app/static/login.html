@@ -23,8 +23,7 @@
 
     <!--MY JS AND CSS FILES-->
     <link rel="stylesheet" href="./static/css/styles.css">
-    <script src="./static/js/index.js"></script>
-
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -53,8 +52,6 @@
         </div>
     </dialog>
 
-
-
     <!-- Snackbar-->
     <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
         <div class="mdl-snackbar__text"></div>
@@ -65,39 +62,5 @@
         <div class="page-loader mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
     </div>
 
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-                <!-- <img src="" style="padding-right: 0.7rem"> -->
-                <span class="mdl-layout-title">Movie Recomendation</span>
-                <div class="mdl-layout-spacer"></div>
-                <!-- <button id="signout_button"
-                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Sign
-                    Out</button> -->
-            </div>
-        </header>
-        <main class="mdl-layout__content">
-            <div class="page-content">
-                <div class="mdl-grid" id="movie_grid">
-
-                    {% for movie in movies%}
-                    <div class="mdl-cell mdl-cell--1-col">
-                        <div class="card-rectangle mdl-card mdl-shadow--4dp">
-                            <div class="mdl-card__media"><img
-                                    src="{{movie.poster}}" width="110px"
-                                    height="165px" border="0">
-                            </div>
-                        </div>
-                        <a class="movie-title"><b>{{movie.title}}</b></a>
-                        <a class="movie-year"><b>{{movie.year}}</b></a>
-                    </div>
-                    {% endfor %}
-
-                </div>
-            </div>
-    </div>
-    </main>
-    </div>
 </body>
-
 </html>

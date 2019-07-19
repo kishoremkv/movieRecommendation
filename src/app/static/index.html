@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Movie Recomendation</title>
+    <link rel="icon" type="image/gif" href="" />
+
+    <!--JQUERY JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <!--MATERIAL DESIGN AND FONT-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_orange-amber.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!--DIALOG POLYFILL-->
+    <link rel="stylesheet" type="text/css" href="./css/dialog-polyfill.css" />
+    <script src="./js/dialog-polyfill.js"></script>
+
+
+    <!--MY JS AND CSS FILES-->
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/index.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <!-- Login dialog -->
+    <dialog id="login_dialog" class="mdl-dialog">
+        <h4 class="mdl-dialog__title">Sign In</h4>
+        <div class="mdl-dialog__content">
+            <p id="login_error"></p>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="login_email">
+                <label class="mdl-textfield__label" for="login_email">Email</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" id="login_password">
+                <label class="mdl-textfield__label" for="login_password">Password</label>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <!-- Accent-colored raised button with ripple -->
+            <button id="login_button"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Sign
+                In</button>
+            <div id="login_progress" class="mdl-spinner mdl-js-spinner is-active"></div>
+        </div>
+    </dialog>
+
+
+
+    <!-- Snackbar-->
+    <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+
+    <div class="login-cover">
+        <div class="page-loader mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+    </div>
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- <img src="" style="padding-right: 0.7rem"> -->
+                <span class="mdl-layout-title">Movie Recomendation</span>
+                <div class="mdl-layout-spacer"></div>
+                <!-- <button id="signout_button"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Sign
+                    Out</button> -->
+            </div>
+        </header>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <div class="mdl-grid" id="movie_grid">
+
+                    <div class="mdl-cell mdl-cell--1-col post-item">
+                        <div class="card-rectangle mdl-card">
+                            <div class="mdl-card__media"><img
+                                    src="https://image.tmdb.org/t/p/w500/rhIRbceoE9lR4veEXuwCC2wARtG.jpg" width="110px"
+                                    height="165px" border="0">
+                            </div>
+                        </div>
+                        <a class="movie-title"><b>Toy Story</b></a>
+                        <a class="movie-year"><b>2001</b></a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </main>
+    </div>
+</body>
+
+</html>

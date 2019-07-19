@@ -26,9 +26,9 @@ $(document).ready(function () {
         dialogPolyfill.registerDialog(dialog);
     }
     // Now dialog acts like a native <dialog>.
-    //dialog.showModal();
+    dialog.showModal();
 
-    $(".login-cover").hide();
+    $(".login-cover").show();
 
 });
 
