@@ -19,7 +19,6 @@ def index():
     for i in range(1,100):
         list.append(randint(1,45467))
     movies = get_movie_info_min(list)
-    print(movies[2].original_title)
     return render_template('index.html', movies=movies)
 
 @app.route('/movie', methods=['GET'])
@@ -43,7 +42,7 @@ def login():
     if request.method == 'POST':
         user = User.query.filter_by(email=request.form['login_email']).first()
         
-        if user is None or not user.check_password('admin'):
+        if user is None or not user.check_password(request.form['login_password']):
             error = 'Invalid email or password'
             return redirect('/login')
         login_user(user)
