@@ -16,14 +16,10 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_orange-amber.min.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
-    <!--DIALOG POLYFILL-->
-    <link rel="stylesheet" type="text/css" href="./css/dialog-polyfill.css" />
-    <script src="./js/dialog-polyfill.js"></script>
-
 
     <!--MY JS AND CSS FILES-->
-    <link rel="stylesheet" href="./css/styles.css">
-    <script src="./js/index.js"></script>
+    <link rel="stylesheet" href="./static/css/styles.css">
+    <link rel="stylesheet" href="./static/css/app.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -40,13 +36,50 @@
         <main class="mdl-layout__content">
             <div class="page-content">
 
+                <div class="container" id="movie-content" itemscope="" itemtype="http://schema.org/Movie">
 
-                <p>{{movie.overview}}</p>
+                    <div class="row">
+                        <div id="mobile-movie-info" class="visible-xs col-xs-20">
+                            <h1>9th Company Yify</h1>
+                            <h2>2005</h2>
+                            <h2>Action - Drama - History - War</h2>
+                        </div>
+                        <div id="movie-poster" class="col-xs-10 col-sm-6 col-lg-5">
+                            <img class="img-responsive" src="{{movie.poster_path}}">
+                        </div>
 
+                        <div id="movie-info" class="col-xs-10 col-sm-14 col-md-7 col-lg-8 col-lg-offset-1 movie-info"
+                            data-movie-id="11902">
+                            <div class="hidden-xs">
+                                <h1>{{movie.original_title}}</h1>
+                                <h2>{{movie.release_date}}</h2>
+                                <h2>{{movie.runtime}}</h2>
+                            </div>
+                        </div>
+                        <div id="movie-related" class="col-md-6 hidden-xs hidden-sm">
+                            <p>Similar Movies</p>
+                            <a><img src="https://cdn.putlockers.es/images/movies/iron-man-three-2013/cover-medium.jpg"></a>
+                            <a><img src="https://cdn.putlockers.es/images/movies/django-unchained-2012/cover-medium.jpg"></a>
+                            <a><img src="https://cdn.putlockers.es/images/movies/x-men-days-of-future-past-2014/cover-medium.jpg"></a>
+                            <a><img src="https://cdn.putlockers.es/images/movies/superman-1978/cover-medium.jpg"></a>
+                        </div>
+                    </div>
 
+                    <div id="movie-sub-info" class="row">
+                        <div id="synopsis" class="col-sm-10 col-md-13 col-lg-12">
+                            <h3>Synopsis</h3>
+                            <p >{{movie.overview}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
 </body>
 
 </html>
+
+
+
+
+
