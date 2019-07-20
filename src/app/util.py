@@ -3,7 +3,7 @@ from random import randint
 from app.models import Movie
 import os
 
-path = os.getcwd() + '\\app\\dataset\\movies_metadata.csv'
+path = os.getcwd() + '/app/dataset/movies_metadata.csv'
 data = pd.read_csv(path)
 def get_movie_info_min(list):
     movies = []
