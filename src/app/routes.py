@@ -17,16 +17,23 @@ from random import randint
 def index():
     list = []
     for i in range(1,100):
-        list.append(randint(1,45467))
+        list.append(randint(1,45296))
     movies = get_movie_info_min(list)
     return render_template('index.html', movies=movies)
 
 @app.route('/movie', methods=['GET'])
 @login_required
 def movie():
+
+    list = []
+    for i in range(1,7):
+        list.append(randint(1,45296))
+    similar_movies = get_movie_info_min(list)
+    print(similar_movies[2].poster_path_w154)
+
     movie_id = request.args.get('id')
     movie = get_movie_info(movie_id)
-    return render_template('movie.html', movie=movie)
+    return render_template('movie.html', movie=movie, similar_movies=similar_movies)
 
 
 @app.route('/logout')

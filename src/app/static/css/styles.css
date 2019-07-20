@@ -5,7 +5,6 @@ body {
 }
 
 
-
 #login_progress {
     display: none;
 }
@@ -39,6 +38,10 @@ body {
     border: 2px solid #FF5722;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
+}
+
+h4 {
+    color: hsla(0,0%,100%,.40);
 }
 
 .movie-title {
@@ -76,3 +79,24 @@ body {
 .movie-year {
     color: hsla(0,0%,100%,.45);
 }
+
+.similar-movie {
+    box-shadow: 4px;
+    margin-right: 8px;
+    margin-top: 16px;
+    background-color: hsla(0,0%,100%,.0);
+    border: 2px solid transparent;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.similar-movie:hover {
+    box-shadow: 4px;
+    margin-right: 8px;
+    margin-top: 16px;
+    background-color: hsla(0,0%,100%,.0);
+    border: 2px solid #FF5722;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+

@@ -42,23 +42,21 @@
                 <div class="mdl-grid" id="movie_grid">
 
                     {% for movie in movies%}
-                    <div class="mdl-cell mdl-cell--1-col" onclick="on_click('{{movie.id}}')" >
+                    <div class="mdl-cell mdl-cell--1-col img-responsive" onclick="on_click('{{movie.id}}')" >
                         <div class="card-rectangle mdl-card mdl-shadow--4dp">
-                            <div class="mdl-card__media"><img src="{{movie.poster_path}}" width="110px" height="165px"
+                            <div class="mdl-card__media"><img src="{{movie.poster_path_w154}}" width="110px" height="165px"
                                     border="0">
                             </div>
                         </div>
                         <a class="movie-title"><b>{{movie.original_title}}</b></a>
                         <a class="movie-year"><b>{{movie.release_date}}</b></a>
                     </div>
+                    {% endfor %}
                     <script>
                         function on_click(i) {
                             window.location.href = '/movie?id=' + i;
                         }
                     </script>
-
-                    {% endfor %}
-
                 </div>
             </div>
         </main>

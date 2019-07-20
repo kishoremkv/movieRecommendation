@@ -29,6 +29,8 @@ class Movie():
             self=None, 
             id=None, 
             original_title=None, 
+            poster_path_w154=None,
+            poster_path_w500=None,
             poster_path=None, 
             release_date=None,
             adult=None,
@@ -54,8 +56,9 @@ class Movie():
         ):  
         self.id = id
         self.original_title = original_title
-        self.poster_path = 'http://image.tmdb.org/t/p/w185{}'.format(poster_path)
-        self.release_date = str(release_date)[0:4]
+        self.poster_path_w154 = 'http://image.tmdb.org/t/p/w154{}'.format(poster_path)
+        self.poster_path_w500 = 'http://image.tmdb.org/t/p/w500{}'.format(poster_path)
+        self.release_date = str(release_date)[-4:]
         self.adult = adult  
         self.belongs_to_collection = belongs_to_collection
         self.budget = budget
@@ -68,7 +71,11 @@ class Movie():
         self.production_companies = production_companies
         self.production_countries = production_countries
         self.revenue = revenue
-        self.runtime = runtime
+        if runtime is not None:
+            hours = int(runtime/60)
+            minutes = int(runtime%60)
+            self.runtime = '{} hr {} min'.format(hours, minutes)
+        
         self.spoken_languages = spoken_languages
         self.status = status
         self.tagline = tagline
