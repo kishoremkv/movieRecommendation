@@ -1,10 +1,10 @@
 import pandas as pd
 from random import randint
 from app.models import Movie
+import os
 
-
-data = pd.read_csv('D:\projects\movie-recommendation\dataset\movies_metadata.csv')
-
+path = os.getcwd() + '\\app\\dataset\\movies_metadata.csv'
+data = pd.read_csv(path)
 def get_movie_info_min(list):
     movies = []
     for index in list:
