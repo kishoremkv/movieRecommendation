@@ -11,6 +11,9 @@ def get_movie_info_min(list):
         movies.append(Movie(id=index, original_title=data.loc[index,'original_title'], release_date=data.loc[index,'release_date'], poster_path=data.loc[index,'poster_path']))
     return movies
 
+
+
+
 def get_movie_info(id):
 
     id = int(id)

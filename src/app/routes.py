@@ -9,15 +9,14 @@ from app.util import get_movie_info
 import json
 from random import randint
 
-
-
-
 @app.route('/')
 @login_required
 def index():
     list = []
     for i in range(1,100):
         list.append(randint(1,45296))
+    
+
     movies = get_movie_info_min(list)
     return render_template('index.html', movies=movies)
 
