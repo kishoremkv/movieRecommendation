@@ -1,19 +1,31 @@
 import pandas as pd
 from random import randint
-from app.models import Movie
 import os
 import sqlite3
 from keras.models import Sequential
 from keras.layers import Dense,Dropout
 import numpy as np
+from app.models import UserPreferences, Movie
+from app import db
+from config import Config
 
 path = os.getcwd() + '/app/dataset/movies_metadata.csv'
 data = pd.read_csv(path)
+
 def get_movie_info_min(list):
     movies = []
     for index in list:
         movies.append(Movie(id=data.loc[index,'id'], original_title=data.loc[index,'original_title'], release_date=data.loc[index,'release_date'], poster_path=data.loc[index,'poster_path']))
     return movies
+
+
+def create_connection(db_file):
+    connection = None
+    try:
+        connection = sqlite3.connect(db_file)
+    except Exception as e:
+        print(e)
+    return connection
 
 def get_movie_info(id):
 
@@ -34,19 +46,16 @@ def get_movie_info(id):
     print(movie)
     return movie
 
+def set_preferences(user_id, movie_ids):
+    for movie_id in movie_ids:
+        preference = UserPreferences(movie_id=movie_id, user_id=user_id)
+        db.session.add(preference)
+    db.session.commit()
 
-
-def create_connection(db_file):
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-    except Exception as e:
-        print(e)
-    return conn
-
-def predict(movshown,movsel):
-    conn=create_connection(os.getcwd()+'/app/dataset/MovLens.db')
-    cur = conn.cursor()
+def predict(movshown, movsel):
+    
+    movie_db = create_connection(Config.MOVIE_DATABASE_PATH)
+    cur = movie_db.cursor()
     cur.execute("PRAGMA table_info('movlens')")
     rows = cur.fetchall()
     colnames=[]
@@ -56,7 +65,7 @@ def predict(movshown,movsel):
     for x in movshown:
         st+=str(x)+","
     st=st[:-1]
-    cur.execute("select * from movlens where id not in("+st+")");
+    cur.execute("select * from movlens where id not in("+st+")")
     rows=cur.fetchall()
     df_test=pd.DataFrame(rows,columns=colnames)
     st=""
@@ -91,4 +100,5 @@ def predict(movshown,movsel):
     print(sum(y_pred==1))
     # pred_mov_id=list(df_test.iloc[np.where(y_pred==1)[0],1])
     pred_mov_id=np.where(y_pred==1)[0]
+    print(pred_mov_id)
     return pred_mov_id

@@ -2,23 +2,24 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.models import User, Movie
-from app.util import get_movie_info_min
-from app.util import get_movie_info
+from app.models import User, Movie, UserPreferences
+from app.util import get_movie_info_min, get_movie_info, predict, set_preferences
 from app.forms import LoginForm, RegistrationForm
 
-import json
 from random import randint
+
+import json
+import random
+
+movies=[]
 
 @app.route('/')
 @login_required
 def index():
-    list = []
-    for i in range(1,100):
-        list.append(randint(1,45296))
-    
+    result = UserPreferences.query.with_entities(UserPreferences.movie_id).filter(UserPreferences.user_id == current_user.id).all()
+    result = [r[0] for r in result]
 
-    movies = get_movie_info_min(list)
+    movies = get_movie_info_min(result)
     return render_template('index.html', movies=movies)
 
 @app.route('/movie', methods=['GET'])
@@ -75,28 +76,27 @@ def register():
 @login_required
 @app.route('/calibrate',methods=['GET','POST'])
 def  calib():
-    global movies
+
+    list1=random.sample(range(1,45296),50)
     if request.method=='GET':
-        movies.clear()
-        list1=random.sample(range(1,45296),50)
-        movies.extend(get_movie_info_min(list1))
-        # print(movies)
+        movies = get_movie_info_min(list1)
         return render_template('calib.html',movies=movies)
+    
     if request.method=='POST':
         movshown=[]
         movsel=[]
-        for i in movies:
-            movshown.append(i.id)
+        for i in list1:
+            movshown.append(i)
         movsel.extend(request.form.getlist('sel'))
         movsel=[int(i) for i in movsel]
-            # print("\n\n",type(request.form['sel']),"\n\n")
+        print("\n\n",type(request.form['sel']),"\n\n")
         print("\n\nmovshown:  ",movshown,"\n\n")
         print("\n\nmovsel:  ",movsel,"\n\n")
-        ids=predict(movshown,movsel)
-        print(ids)
-        movies=[]
-        # for i in ids[:50]:
-        #     movies.append(get_movie_info_min())
-        movies.extend(get_movie_info_min(ids[:100].tolist()))
-        return redirect(url_for('index',movies=movies))
+        # movie_ids = predict(movshown,movsel)
+        movie_ids = [10,11,12]
+        print(movie_ids)
+
+        set_preferences(user_id=current_user.id, movie_ids=movie_ids)
+
+        return redirect(url_for('index'))
     

@@ -100,3 +100,16 @@ h4 {
     transition: all 0.2s ease-in-out;
 }
 
+input[type="checkbox"] {
+    display: none;
+}
+
+:checked + label {
+    box-shadow: 4px;
+    margin-right: 8px;
+    margin-top: 16px;
+    background-color: hsla(0,0%,100%,.0);
+    border: 2px solid #FF5722;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }

@@ -1,71 +1,93 @@
 <html>
 
 <head>
-    <title>Calibrate</title>
-    <style>
-        .cell {
-            width: 130px;
-            height: 210px;
-            margin: 10px;
-            padding: 5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            /* background-color: red; */
-        }
-        
-        input[type="checkbox"] {
-            display: none;
-        }
-        
-        .css-label {
-            padding-left: 20px;
-            display: flex;
-            width: 110px;
-            height: 165px;
-            background-repeat: no-repeat;
-            /* background-color: #e9eef4; */
-            background-size: cover;
-        }
-        
-        input[type="checkbox"]:checked+label.css-label {
-            background-position: 0 0;
-            border: 5px solid orange;
-        }
-        
-        form {
-            width: 95vw;
-            /* height: 95vh; */
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .con {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            /*   background-color:black; */
-            align-items: flex-start;
-            justify-content: flex-start;
-        }
-    </style>
+
+
+    <title>Movie Recomendation</title>
+    <link rel="icon" type="image/gif" href="" />
+
+    <!--JQUERY JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <!--MATERIAL DESIGN AND FONT-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_orange-amber.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!--DIALOG POLYFILL-->
+    <link rel="stylesheet" type="text/css" href="./static/css/dialog-polyfill.css" />
+    <script src="./static/js/dialog-polyfill.js"></script>
+
+
+    <!--MY JS AND CSS FILES-->
+    <link rel="stylesheet" href="./static/css/styles.css">
+    <!-- <script src="./static/js/index.js"></script> -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-    <form method="post" action="">
-        <div class="con">
-            {%for movie in movies%}
-            <div class="cell">
-                <input type="checkbox" name="sel" value="{{movie.id}}" id="{{movie.id}}">
-                <label for="{{movie.id}}" class="css-label" style="background-image: url({{movie.poster_path_w154}})"></label>
-                <div>{{movie.original_title}}</div>
-                <div>{{movie.release_date}}</div>
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- <img src="" style="padding-right: 0.7rem"> -->
+                <span class="mdl-layout-title">Movie Recomendation</span>
+                <div class="mdl-layout-spacer"></div>
             </div>
-            {%endfor%}
-        </div>
-        <input type="submit" value='SUBMIT' name="sub" style="width: 180px;align-self:flex-end">
-    </form>
+        </header>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <form method="post" action="">
+                    <div class="mdl-grid" id="movie_grid">
+                        {% for movie in movies%}
+                        <div class="mdl-cell mdl-cell--1-col img-responsive" onclick="on_click('{{movie.id}}')">
+                            <input type="checkbox" name="sel" value="{{movie.id}}" id="{{movie.id}}">
+                            <label for="{{movie.id}}">
+                                <div id="movie_{{movie.id}}" class="card-rectangle mdl-card mdl-shadow--4dp">
+                                    <div class="mdl-card__media"><img src="{{movie.poster_path_w154}}" width="110px" height="165px" border="0">
+                                    </div>
+                                </div>
+                            </label>
+                            <a class="movie-title"><b>{{movie.original_title}}</b></a>
+                            <a class="movie-year"><b>{{movie.release_date}}</b></a>
+                        </div>
+                        {% endfor %}
+                        <script>
+                            function on_click(id) {
+                                console.log("Checked: " + id);
+                                
+                                if($("#"+id).is(":checked")) {
+                                    $('#movie_' + id).css({
+                                        "width": "110px",
+                                        "height": "165px",
+                                        "min-height": "165px",
+                                        "background-color": "hsla(0,0%,100%,.0)",
+                                        "border": "2px solid #FF5722"
+                                    });
+                                } else {
+
+                                    $('#movie_' + id).css({
+                                        "width": "110px",
+                                        "height": "165px",
+                                        "min-height": "165px",
+                                        "background-color": "hsla(0,0%,100%,.0)",
+                                        "border-color": "transparent"                                  
+                                    });
+                                }
+                                
+                            }
+                        </script>
+                    </div>
+                    <input type="submit" value='SUBMIT' name="sub" style="width: 180px;align-self:flex-end">
+                </form>
+            </div>
+        </main>
+    </div>
+
+
 </body>
 
 </html>
