@@ -72,3 +72,31 @@ def register():
     return render_template('register.html', title='Register', form=form)   
 
     
+@login_required
+@app.route('/calibrate',methods=['GET','POST'])
+def  calib():
+    global movies
+    if request.method=='GET':
+        movies.clear()
+        list1=random.sample(range(1,45296),50)
+        movies.extend(get_movie_info_min(list1))
+        # print(movies)
+        return render_template('calib.html',movies=movies)
+    if request.method=='POST':
+        movshown=[]
+        movsel=[]
+        for i in movies:
+            movshown.append(i.id)
+        movsel.extend(request.form.getlist('sel'))
+        movsel=[int(i) for i in movsel]
+            # print("\n\n",type(request.form['sel']),"\n\n")
+        print("\n\nmovshown:  ",movshown,"\n\n")
+        print("\n\nmovsel:  ",movsel,"\n\n")
+        ids=predict(movshown,movsel)
+        print(ids)
+        movies=[]
+        # for i in ids[:50]:
+        #     movies.append(get_movie_info_min())
+        movies.extend(get_movie_info_min(ids[:100].tolist()))
+        return redirect(url_for('index',movies=movies))
+    
