@@ -9,13 +9,20 @@ from app.models import UserPreferences, Movie
 from app import db
 from config import Config
 
-path = os.getcwd() + '/app/dataset/movies_metadata.csv'
-data = pd.read_csv(path)
+# path = os.getcwd() + '/app/dataset/movies_metadata.csv'
+# data = pd.read_csv(path)
 
 def get_movie_info_min(list):
+
+    movie_db = create_connection(Config.MOVIE_DATABASE_PATH)
+   
+    data = pd.read_sql_query('SELECT * from movlens where id in ' + str(tuple(list)), movie_db)
+    print(data["release_date"])
+
     movies = []
-    for index in list:
+    for index in range(0, data.shape[0]):
         movies.append(Movie(id=data.loc[index,'id'], original_title=data.loc[index,'original_title'], release_date=data.loc[index,'release_date'], poster_path=data.loc[index,'poster_path']))
+    
     return movies
 
 
@@ -29,22 +36,34 @@ def create_connection(db_file):
 
 def get_movie_info(id):
 
-    id = int(id)
+    movie_db = create_connection(Config.MOVIE_DATABASE_PATH)
+    cursor = movie_db.cursor()
+    cursor.execute('SELECT * from movlens where id = ' + str(id))
+    rows = cursor.fetchall()
+
+    row = rows[0]
+    print(row)
+
     movie = Movie( 
         id=id,
-        original_title=data.loc[id,'original_title'],
-        poster_path=data.loc[id,'poster_path'], 
-        release_date=data.loc[id,'release_date'],
-        adult=data.loc[id,'adult'],
-        genres=data.loc[id,'genres'],
-        imdb_id=data.loc[id,'imdb_id'],
-        original_language=data.loc[id,'original_language'],
-        overview=data.loc[id,'overview'],
-        production_companies=data.loc[id,'production_companies'],
-        runtime=data.loc[id,'runtime']
+        original_title=row.original_title,
+        poster_path=row.poster_path, 
+        release_date=row.release_date,
+        adult=row.adult,
+        genres=row.genres,
+        imdb_id=row.imdb_id,
+        original_language=row.original_language,
+        overview=row.overview,
+        production_companies=row.production_companies,
+        runtime=row.runtime
     )
     print(movie)
     return movie
+
+def get_preferences(user_id):
+    result = UserPreferences.query.with_entities(UserPreferences.movie_id).filter(UserPreferences.user_id == user_id).all()
+    result = [r[0] for r in result]
+    return result
 
 def set_preferences(user_id, movie_ids):
     for movie_id in movie_ids:

@@ -2,8 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.models import User, Movie, UserPreferences
-from app.util import get_movie_info_min, get_movie_info, predict, set_preferences
+from app.models import User
+from app.util import get_movie_info_min, get_movie_info, predict, set_preferences, get_preferences
 from app.forms import LoginForm, RegistrationForm
 
 from random import randint
@@ -16,8 +16,11 @@ movies=[]
 @app.route('/')
 @login_required
 def index():
-    result = UserPreferences.query.with_entities(UserPreferences.movie_id).filter(UserPreferences.user_id == current_user.id).all()
-    result = [r[0] for r in result]
+
+    result = get_preferences(user_id=current_user.id)
+    print(result)
+    result.remove(81412)
+
 
     movies = get_movie_info_min(result)
     return render_template('index.html', movies=movies)
@@ -83,8 +86,10 @@ def  calib():
         return render_template('calib.html',movies=movies)
     
     if request.method=='POST':
+        
         movshown=[]
         movsel=[]
+        
         for i in list1:
             movshown.append(i)
         movsel.extend(request.form.getlist('sel'))
