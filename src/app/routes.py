@@ -5,6 +5,7 @@ from app import app, db
 from app.models import User, Movie
 from app.util import get_movie_info_min
 from app.util import get_movie_info
+from app.forms import LoginForm, RegistrationForm
 
 import json
 from random import randint
@@ -43,15 +44,31 @@ def logout():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect('/')
-    
-    if request.method == 'POST':
-        user = User.query.filter_by(email=request.form['login_email']).first()
-        
-        if user is None or not user.check_password(request.form['login_password']):
-            error = 'Invalid email or password'
-            return redirect('/login')
-        login_user(user)
-        return redirect('/')
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        print(user)
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid email or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Sign In', form=form)
 
-    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)   
+
+    

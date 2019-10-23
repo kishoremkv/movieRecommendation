@@ -21,14 +21,14 @@ function isEmpty(str) {
 
 $(document).ready(function () {
 
-    var dialog = document.querySelector('#login_dialog');
+    var dialog = document.querySelector('#dialog');
     if (!dialog.showModal) {
         dialogPolyfill.registerDialog(dialog);
     }
     // Now dialog acts like a native <dialog>.
     dialog.showModal();
 
-    $(".login-cover").show();
+   $(".login-cover").show();
 
 });
 
