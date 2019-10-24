@@ -59,6 +59,7 @@ class Movie():
             video=None,
             vote_average=None,
             vote_count=None,
+            cast=None
         ):  
         self.id = id
         self.original_title = original_title
@@ -89,4 +90,5 @@ class Movie():
         self.video = video
         self.vote_average = vote_average
         self.vote_count = vote_count
+        self.cast = cast
    

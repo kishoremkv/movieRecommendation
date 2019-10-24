@@ -14,14 +14,12 @@ from config import Config
 
 def get_movie_info_min(list):
 
-    movie_db = create_connection(Config.MOVIE_DATABASE_PATH)
+    movie_db = create_connection(Config.MOVIE_INFO_DATABASE_PATH)
+    data = pd.read_sql_query('SELECT * from db where id in ' + str(tuple(list)), movie_db)
    
-    data = pd.read_sql_query('SELECT * from movlens where id in ' + str(tuple(list)), movie_db)
-    print(data)
-
     movies = []
-    # for index in range(0, data.shape[0]):
-    #     movies.append(Movie(id=data.loc[index,'id'], original_title=data.loc[index,'original_title'], release_date=data.loc[index,'release_date'], poster_path=data.loc[index,'poster_path']))
+    for index in range(0, data.shape[0]):
+        movies.append(Movie(id=data.loc[index,'id'], original_title=data.loc[index,'original_title'], release_date=data.loc[index,'release_date'], poster_path=data.loc[index,'poster_path']))
     
     return movies
 
@@ -36,28 +34,30 @@ def create_connection(db_file):
 
 def get_movie_info(id):
 
-    movie_db = create_connection(Config.MOVIE_DATABASE_PATH)
-    cursor = movie_db.cursor()
-    cursor.execute('SELECT * from movlens where id = ' + str(id))
-    rows = cursor.fetchall()
+    movie_db = create_connection(Config.MOVIE_INFO_DATABASE_PATH)
 
-    row = rows[0]
-    print(row)
-
+    data = pd.read_sql_query('SELECT * from db where id = ' + str(id), movie_db)
+    
+    genres = pd.read_sql_query('SELECT genre_name from genres where id = ' + str(id), movie_db)
+   
+    genres_list = []
+    for index in range(0, genres.shape[0]):
+        genres_list.append(genres.at[index, 'genre_name'])
+    
     movie = Movie( 
-        id=id,
-        original_title=row.original_title,
-        poster_path=row.poster_path, 
-        release_date=row.release_date,
-        adult=row.adult,
-        genres=row.genres,
-        imdb_id=row.imdb_id,
-        original_language=row.original_language,
-        overview=row.overview,
-        production_companies=row.production_companies,
-        runtime=row.runtime
+        original_title=data.at[0,'original_title'],
+        poster_path=data.at[0,'poster_path'], 
+        release_date=data.at[0,'release_date'],
+        genres=genres_list,
+        adult=data.at[0,'adult'],
+        imdb_id=data.at[0,'imdb_id'],
+        original_language=data.at[0,'original_language'],
+        overview=data.at[0,'overview'],
+        production_companies=data.at[0,'production_companies'],
+        runtime=data.at[0,'runtime'],
+        cast = data.at[0, 'cast'].split(',')
     )
-    print(movie)
+    
     return movie
 
 def get_preferences(user_id):
@@ -119,5 +119,6 @@ def predict(movshown, movsel):
     print(sum(y_pred==1))
     # pred_mov_id=list(df_test.iloc[np.where(y_pred==1)[0],1])
     pred_mov_id=np.where(y_pred==1)[0]
+    print('-----------predicted-------')
     print(pred_mov_id)
     return pred_mov_id

@@ -17,11 +17,8 @@ movies=[]
 @login_required
 def index():
 
-    # result = get_preferences(user_id=current_user.id)
-    # print(result)
-
-    result = [1,2,3,4,5,6,7]
-
+    result = get_preferences(user_id=current_user.id)
+    
     movies = get_movie_info_min(result)
     return render_template('index.html', movies=movies)
 
@@ -33,7 +30,7 @@ def movie():
     for i in range(1,7):
         list.append(randint(1,45296))
     similar_movies = get_movie_info_min(list)
-    print(similar_movies[2].poster_path_w154)
+    
 
     movie_id = request.args.get('id')
     movie = get_movie_info(movie_id)
@@ -87,6 +84,8 @@ def  calib():
     
     if request.method=='POST':
         
+        print('submited')
+
         movshown=[]
         movsel=[]
         
@@ -94,13 +93,12 @@ def  calib():
             movshown.append(i)
         movsel.extend(request.form.getlist('sel'))
         movsel=[int(i) for i in movsel]
+        
         print("\n\n",type(request.form['sel']),"\n\n")
         print("\n\nmovshown:  ",movshown,"\n\n")
         print("\n\nmovsel:  ",movsel,"\n\n")
-        # movie_ids = predict(movshown,movsel)
-        movie_ids = [10,11,12]
-        print(movie_ids)
 
+        movie_ids = predict(movshown,movsel)
         set_preferences(user_id=current_user.id, movie_ids=movie_ids)
 
         return redirect(url_for('index'))
