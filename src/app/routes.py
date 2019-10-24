@@ -17,10 +17,10 @@ movies=[]
 @login_required
 def index():
 
-    result = get_preferences(user_id=current_user.id)
-    print(result)
-    result.remove(81412)
+    # result = get_preferences(user_id=current_user.id)
+    # print(result)
 
+    result = [1,2,3,4,5,6,7]
 
     movies = get_movie_info_min(result)
     return render_template('index.html', movies=movies)
@@ -56,7 +56,7 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid email or password')
             return redirect(url_for('login'))
-        login_user(user, remember=form.remember_me.data)
+        login_user(user)
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
 

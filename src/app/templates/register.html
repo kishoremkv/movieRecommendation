@@ -22,15 +22,54 @@
 
 
     <!--MY JS AND CSS FILES-->
-    <link rel="stylesheet" href="./static/css/styles.css">
+    <link rel="stylesheet" href="./static/css/login_register.css">
     <script src="./static/js/index.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
+    <div class="mdl-layout mdl-js-layout">
+        <div id="login-conatiner" class="mdl-card mdl-shadow--16dp">
+            <div class="mdl-card__supporting-text">
+                <div id="login-fab" class="mdl-color--accent mdl-color-text--white">
+                    <i id="lock-icon" class="material-icons">lock</i>
+                </div>
+                <div id="card-heading">Register</div>
+                <form action="" method="post" novalidate>
+                    {{ form.hidden_tag() }}
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        {{ form.email.label(class_="mdl-textfield__label") }}
+                        {{ form.email(size=32, class_="mdl-textfield__input") }}
 
-    <dialog id="dialog" class="mdl-dialog">
+                        {% for error in form.email.errors %}
+                        <span style="color: red; font-size: 0.8rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        {{ form.password.label(class_="mdl-textfield__label") }}
+                        {{ form.password(size=32, class_="mdl-textfield__input") }}
+
+                        {% for error in form.password.errors %}
+                        <span style="color: red; font-size: 0.8rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        {{ form.password2.label(class_="mdl-textfield__label") }}
+                        {{ form.password2(size=32, class_="mdl-textfield__input") }}
+                        
+                        {% for error in form.password2.errors %}
+                        <span style="color: red; font-size: 0.8rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {{ form.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") }}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- <dialog id="dialog" class="mdl-dialog">
         <h1>Register</h1>
         <form action="" method="post">
             {{ form.hidden_tag() }}
@@ -63,6 +102,6 @@
         <div class="mdl-snackbar__text"></div>
         <button class="mdl-snackbar__action" type="button"></button>
     </div>
-</body>
+</body> -->
 
 </html>

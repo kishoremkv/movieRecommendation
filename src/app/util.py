@@ -17,11 +17,11 @@ def get_movie_info_min(list):
     movie_db = create_connection(Config.MOVIE_DATABASE_PATH)
    
     data = pd.read_sql_query('SELECT * from movlens where id in ' + str(tuple(list)), movie_db)
-    print(data["release_date"])
+    print(data)
 
     movies = []
-    for index in range(0, data.shape[0]):
-        movies.append(Movie(id=data.loc[index,'id'], original_title=data.loc[index,'original_title'], release_date=data.loc[index,'release_date'], poster_path=data.loc[index,'poster_path']))
+    # for index in range(0, data.shape[0]):
+    #     movies.append(Movie(id=data.loc[index,'id'], original_title=data.loc[index,'original_title'], release_date=data.loc[index,'release_date'], poster_path=data.loc[index,'poster_path']))
     
     return movies
 
