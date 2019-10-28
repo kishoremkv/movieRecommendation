@@ -91,10 +91,11 @@ def predict(movshown, movsel):
     for x in movshown:
         st+=str(x)+","
     st=st[:-1]
-    cur.execute("select * from movlens where id in("+st+")");
+    cur.execute("select * from movlens where id in("+st+")")
     rows=cur.fetchall()
     df_train=pd.DataFrame(rows,columns=colnames)
     print(df_train.shape,"   ",df_test.shape)
+    print(df_train.head())
     y_train=[]
     for i in df_train.index:
         if df_train['id'][i] in movsel:
@@ -117,8 +118,8 @@ def predict(movshown, movsel):
     hist=model.fit(X_train,y_train,epochs=40,batch_size=5)
     y_pred=model.predict_classes(X_test)
     print(sum(y_pred==1))
-    # pred_mov_id=list(df_test.iloc[np.where(y_pred==1)[0],1])
-    pred_mov_id=np.where(y_pred==1)[0]
+    pred_mov_id=list(df_test.iloc[np.where(y_pred==1)[0],1])
+    # pred_mov_id=np.where(y_pred==1)[0]
     print('-----------predicted-------')
     print(pred_mov_id)
     return pred_mov_id

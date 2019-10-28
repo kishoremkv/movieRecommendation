@@ -3,15 +3,17 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.models import User
-from app.util import get_movie_info_min, get_movie_info, predict, set_preferences, get_preferences
+from app.util import get_movie_info_min, get_movie_info, predict, set_preferences, get_preferences, create_connection
 from app.forms import LoginForm, RegistrationForm
+import pandas as pd
+from app import Config
 
 from random import randint
 
 import json
 import random
 
-movies=[]
+list1=[]
 
 @app.route('/')
 @login_required
@@ -76,9 +78,12 @@ def register():
 @login_required
 @app.route('/calibrate',methods=['GET','POST'])
 def  calib():
-
-    list1=random.sample(range(1,45296),50)
+    global list1
+    movie_db = create_connection(Config.MOVIE_DATABASE_PATH)
+    data = pd.read_sql_query('SELECT distinct(id) from movlens', movie_db)
+    data=list(data['id'])
     if request.method=='GET':
+        list1=random.sample(data,50)
         movies = get_movie_info_min(list1)
         return render_template('calib.html',movies=movies)
     
@@ -100,6 +105,6 @@ def  calib():
 
         movie_ids = predict(movshown,movsel)
         set_preferences(user_id=current_user.id, movie_ids=movie_ids)
-
-        return redirect(url_for('index'))
+        movies=get_movie_info_min(movie_ids[:100])
+        return render_template('calib.html',movies=movies)
     
