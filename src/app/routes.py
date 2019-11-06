@@ -110,5 +110,5 @@ def  calib():
         movie_ids = predict(movshown,movsel)
         set_preferences(user_id=current_user.id, movie_ids=movie_ids)
         movies=get_movie_info_min(movie_ids[:100])
-        return render_template('calib.html',movies=movies)
+        return redirect(url_for('index'))
     
