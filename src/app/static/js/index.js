@@ -1,34 +1,14 @@
-var docId;
-var bal;
-var bal;
-/* UTIL */
-
-
-function showSnackbar(message) {
-    var snackbarContainer = document.querySelector("#snackbar");
-    var data = {
-        message: message,
-        timeout: 2000
-    };
-    snackbarContainer.MaterialSnackbar.showSnackbar(data);
-}
-
-
-function isEmpty(str) {
-    return (!str || 0 === str.length);
-}
-/* UTIL */
-
 $(document).ready(function () {
 
-    var dialog = document.querySelector('#dialog');
-    if (!dialog.showModal) {
-        dialogPolyfill.registerDialog(dialog);
-    }
-    // Now dialog acts like a native <dialog>.
-    dialog.showModal();
+    $("#signout_button").click(function() {
+       console.log("signer out");
+       window.location.href = '/logout';
+   });
 
-   $(".login-cover").show();
+   $("#recalib_button").click(function() {
+    console.log("signer out");
+    window.location.href = '/calibrate';
+});
 
 });
 

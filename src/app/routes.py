@@ -20,6 +20,10 @@ list1=[]
 def index():
 
     result = get_preferences(user_id=current_user.id)
+
+    if len(result) < 1:
+        return redirect(url_for('calib'))
+
     
     movies = get_movie_info_min(result)
     return render_template('index.html', movies=movies)
@@ -42,7 +46,7 @@ def movie():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect('/login')
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -122,4 +122,4 @@ def predict(movshown, movsel):
     # pred_mov_id=np.where(y_pred==1)[0]
     print('-----------predicted-------')
     print(pred_mov_id)
-    return pred_mov_id
+    return pred_mov_id[:50]
